@@ -84,7 +84,4 @@ static inline double cordic_fmod_twopi(double x) {
 }
 
 
-void print_float_components(FloatIEEE val);
-void print_double_components(DoubleIEEE val);
-
 #endif
