@@ -3,9 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-# ==============================================================================
-# 1. CONFIGURAÇÃO DO ARQUIVO DE ENTRADA
-# ==============================================================================
 # Altere para a amostra desejada:
 # 'stress_test_domain_24.csv', 'stress_test_domain_26.csv' ou 'stress_test_domain_32.csv'
 csv_path = 'stress_test_domain_32.csv'
@@ -16,20 +13,15 @@ if not os.path.exists(csv_path):
 df = pd.read_csv(csv_path)
 base_name = os.path.splitext(os.path.basename(csv_path))[0]
 
-# Extração dinâmica do número de iterações a partir do nome do arquivo
 try:
   n_iter = int(base_name.split('_')[-1])
 except ValueError:
   n_iter = 24
 
-# Conversão do domínio de radianos para graus
 x_deg = df['Angle_Rad'] * (180.0 / np.pi)
 piso_teorico = 2.0 ** (-n_iter)
 
 
-# ==============================================================================
-# 2. GRÁFICO 1: SENO E COSSENO (FOCO NO PISO TEÓRICO)
-# ==============================================================================
 fig1, ax1 = plt.subplots(figsize=(9, 5.2), dpi=300)
 
 ax1.axhline(
@@ -77,9 +69,6 @@ fig1.savefig(f'{base_name}_sen_cos.png')
 plt.close(fig1)
 
 
-# ==============================================================================
-# 3. GRÁFICO 2: TANGENTE (TRANSIÇÃO DE OCTANTE E COMPORTAMENTO ASSINTÓTICO)
-# ==============================================================================
 fig2, ax2 = plt.subplots(figsize=(9, 5.2), dpi=300)
 
 ax2.semilogy(
@@ -120,9 +109,6 @@ fig2.savefig(f'{base_name}_tangente.png')
 plt.close(fig2)
 
 
-# ==============================================================================
-# 4. GRÁFICO 3: VISÃO PANORÂMICA (SENO, COSSENO E TANGENTE INTEGRADOS)
-# ==============================================================================
 fig3, ax3 = plt.subplots(figsize=(9, 5.2), dpi=300)
 
 ax3.axhline(
@@ -174,9 +160,6 @@ fig3.savefig(f'{base_name}_integrado.png')
 plt.close(fig3)
 
 
-# ==============================================================================
-# 5. EXPORTAÇÃO DA TABELA ESTATÍSTICA FORMATADA PARA LATEX (.tex)
-# ==============================================================================
 def formatar_notacao(v):
   s = f'{v:.2e}'
   b, e = s.split('e')

@@ -73,9 +73,9 @@ int main(void) {
         fprintf(f_csv, "Category,Test_Name,Actual,Expected,Diff,Status\n");
     }
 
-    printf("=================================================================\n");
+    printf("********************************************************************\n");
     printf("BATERIA DE TESTES DE CASOS DE BORDA E CONFORMIDADE IEEE 754\n");
-    printf("=================================================================\n\n");
+    printf("********************************************************************\n\n");
 
     printf("1. PONTO ZERO E IDENTIDADES FUNDAMENTAIS:\n");
     double s, c;
@@ -166,11 +166,11 @@ int main(void) {
     assert_isnan("Dominio Invalido", "cordic_pow(-1.0, 2.0)",
                  cordic_pow(-1.0, 2.0, TEST_ITERATIONS));
 
-    printf("\n=================================================================\n");
+    printf("\n*********************************************************************\n");
     printf("RESUMO: %d/%d testes passaram (%.1f%%)\n", 
            passed_tests, total_tests, (float)passed_tests / total_tests * 100.0f);
     printf("Arquivos gerados:\n  -> %s\n  -> %s\n", md_filename, csv_filename);
-    printf("=================================================================\n");
+    printf("*********************************************************************\n");
 
     if (f_md) {
         fprintf(f_md, "\n**Resumo**: %d/%d testes passaram (taxa de sucesso: %.1f%%).\n",

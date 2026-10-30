@@ -3,9 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-# ==============================================================================
-# 1. CONFIGURAÇÃO DO ARQUIVO DE ENTRADA
-# ==============================================================================
 # Altere para a rodada desejada:
 # 'benchmark_results_24.csv', 'benchmark_results_26.csv' ou 'benchmark_results_32.csv'
 csv_path = 'benchmark_results_32.csv'
@@ -16,7 +13,6 @@ if not os.path.exists(csv_path):
 df = pd.read_csv(csv_path)
 base_name = os.path.splitext(os.path.basename(csv_path))[0]
 
-# Mapeamento de rótulos matemáticos para os gráficos
 display_names = {
     'sin_cos': r'$\sin + \cos$',
     'tan': r'$\tan$',
@@ -30,7 +26,6 @@ display_names = {
     'pow': r'$x^y$',
 }
 
-# Grupos de funções para os gráficos específicos
 grupos = {
     'circulares': ['sin_cos', 'tan', 'atan'],
     'hiperbolicas': ['sinh_cosh', 'tanh', 'atanh'],
@@ -38,9 +33,6 @@ grupos = {
 }
 
 
-# ==============================================================================
-# 2. FUNÇÃO AUXILIAR PARA PLOTAGEM DE BARRAS AGRUPADAS (POR CATEGORIA)
-# ==============================================================================
 def plot_grupo(df_bench, ops, titulo, sufixo_saida):
   labels = [display_names[op] for op in ops]
   cordic_lats = []
@@ -92,7 +84,6 @@ def plot_grupo(df_bench, ops, titulo, sufixo_saida):
   limite_y = max(max(cordic_lats), max(math_lats))
   ax.set_ylim(0, limite_y * 1.25)
 
-  # Anotação com latência e multiplicador de sobrecarga
   for i, rect in enumerate(rects1):
     h = rect.get_height()
     ax.text(
@@ -124,9 +115,6 @@ def plot_grupo(df_bench, ops, titulo, sufixo_saida):
   plt.close(fig)
 
 
-# ==============================================================================
-# 3. GERAÇÃO DOS TRÊS GRÁFICOS POR CATEGORIA
-# ==============================================================================
 plot_grupo(
     df,
     grupos['circulares'],
@@ -147,9 +135,6 @@ plot_grupo(
 )
 
 
-# ==============================================================================
-# 4. GRÁFICO GERAL PANORÂMICO (BARRAS HORIZONTAIS COM TODAS AS OPERAÇÕES)
-# ==============================================================================
 todas_ops = [
     'sin_cos',
     'tan',
@@ -243,9 +228,6 @@ fig_pan.savefig(f'{base_name}_panoramico.png')
 plt.close(fig_pan)
 
 
-# ==============================================================================
-# 5. EXPORTAÇÃO DA TABELA FORMATADA PARA LATEX (.tex)
-# ==============================================================================
 nomes_latex = {
     'circular_rotate': r'Rotação Circular (\texttt{rotate})',
     'circular_vector': r'Vetorização Circular (\texttt{vector})',

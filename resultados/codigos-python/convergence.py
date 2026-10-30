@@ -2,9 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-# ==============================================================================
-# 1. CONFIGURAÇÃO DO ARQUIVO DE ENTRADA
-# ==============================================================================
 # Altere para o arquivo que deseja analisar:
 # 'cordic_convergence_data_24.csv', 'cordic_convergence_data_26.csv' ou 'cordic_convergence_data_32.csv'
 csv_path = 'cordic_convergence_data_32.csv'
@@ -26,11 +23,6 @@ def configurar_eixos(ax, titulo):
     ax.legend(fontsize=9.5, loc='upper right')
 
 
-# ==============================================================================
-# 2. GERAÇÃO DOS TRÊS GRÁFICOS
-# ==============================================================================
-
-# Gráfico 1: Circulares
 fig1, ax1 = plt.subplots(figsize=(9, 5.5), dpi=300)
 ax1.semilogy(df['N'], df['Theoretical_Bound'], color='black', linestyle='--', linewidth=1.5, label=r'Limite Teórico Assintótico ($2^{-N}$)')
 ax1.semilogy(df['N'], df['Err_Sin_PI_4'], color='#1f77b4', marker='o', markersize=4, linewidth=1.2, label=r'Seno ($\theta = \frac{\pi}{4}$)')
@@ -42,7 +34,6 @@ fig1.savefig(f'{base_name}_circulares.pdf')
 fig1.savefig(f'{base_name}_circulares.png')
 plt.close(fig1)
 
-# Gráfico 2: Hiperbólicas
 fig2, ax2 = plt.subplots(figsize=(9, 5.5), dpi=300)
 ax2.semilogy(df['N'], df['Theoretical_Bound'], color='black', linestyle='--', linewidth=1.5, label=r'Limite Teórico Assintótico ($2^{-N}$)')
 ax2.semilogy(df['N'], df['Err_Sinh_0_5'], color='#1f77b4', marker='o', markersize=4, linewidth=1.2, label=r'Seno Hiperbólico ($u = 0{,}5$)')
@@ -54,7 +45,6 @@ fig2.savefig(f'{base_name}_hiperbolicas.pdf')
 fig2.savefig(f'{base_name}_hiperbolicas.png')
 plt.close(fig2)
 
-# Gráfico 3: Transcendentais
 fig3, ax3 = plt.subplots(figsize=(9, 5.5), dpi=300)
 ax3.semilogy(df['N'], df['Theoretical_Bound'], color='black', linestyle='--', linewidth=1.5, label=r'Limite Teórico Assintótico ($2^{-N}$)')
 ax3.semilogy(df['N'], df['Err_Exp_1_0'], color='#1f77b4', marker='o', markersize=4, linewidth=1.2, label=r'Exponencial ($x = 1{,}0$)')
@@ -69,9 +59,6 @@ fig3.savefig(f'{base_name}_transcendentais.png')
 plt.close(fig3)
 
 
-# ==============================================================================
-# 3. GERAÇÃO AUTOMÁTICA DA TABELA LATEX (.tex)
-# ==============================================================================
 def formatar_notacao_cientifica(val):
     """Converte números em notação científica formatada para o LaTeX com vírgula."""
     if pd.isna(val):
@@ -82,7 +69,6 @@ def formatar_notacao_cientifica(val):
     return f"${base} \\times 10^{{{int(exp)}}}$"
 
 
-# Define os passos representativos de amostragem na tabela
 if max_n == 24:
     amostras_n = [4, 8, 12, 16, 20, 24]
 elif max_n == 26:

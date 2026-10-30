@@ -20,3 +20,14 @@ Este projeto foi concebido para contornar a ausência de multiplicadores combina
 ## 🛠️ Requisitos e Integração
 
 Por ser estritamente *bare-metal* e não utilizar alocação dinâmica de memória (`malloc`), a integração é imediata em qualquer compilador aderente ao padrão C99. Basta adicionar os arquivos do diretório `src/` ao *build system* do seu projeto (Makefile, CMake ou IDE de desenvolvimento embarcado).
+
+## 📚 Fundamentação Teórica e Referências
+
+O desenvolvimento desta biblioteca e suas garantias de convergência numérica foram estritamente baseados na literatura clássica e moderna sobre aritmética computacional e no algoritmo CORDIC:
+
+* **Walther, J. S. (1971).** *A Unified Algorithm for Elementary Functions.* A obra definitiva que unificou o CORDIC nos sistemas circular, hiperbólico e linear, cujas equações estruturam a arquitetura principal desta biblioteca.
+* **Volder, J. E. (1959).** *The CORDIC Trigonometric Computing Technique.* A publicação original que introduziu o método iterativo para cálculos trigonométricos.
+* **Muller, J.-M. (2016).** *Elementary Functions: Algorithms and Implementation (3rd ed.).* Utilizado para a fundamentação da convergência assintótica da raiz quadrada e análise de erro em ponto flutuante.
+* **IEEE Std 754-2019.** *IEEE Standard for Floating-Point Arithmetic.* A norma global seguida para o tratamento rigoroso de bits da mantissa, valores excepcionais (`NaN`, $\infty$) e subnormais.
+* **Andraka, R. (1998).** *A Survey of CORDIC Algorithms for FPGA Based Computers.* Referência central para as justificativas de implementação de CORDIC em hardwares desprovidos de unidades de multiplicação dedicadas (FPUs).
+* **Cody, W. J., & Waite, W. (1980).** *Software Manual for the Elementary Functions.* Base para a estratégia de redução de argumento e tratamento das singularidades nos polos tangenciais.

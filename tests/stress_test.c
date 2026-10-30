@@ -22,15 +22,13 @@ static void test_edge_case(const char *category, const char *expr_name, double i
 }
 
 int main(void) {
-    printf("=========================================================================================================\n");
-    printf("                               BANCADA DE TESTE NUMERICO DE ESTRESSE                                     \n");
-    printf("                  Iteracoes: %d | Formato: IEEE 754 64-bit | Alvo: Casos Limite e Singularidades         \n", CORDIC_ITERS);
-    printf("=========================================================================================================\n\n");
+    printf("************************************************\n");
+    printf("BANCADA DE TESTE NUMERICO DE ESTRESSE\n");
+    printf("Iteracoes: %d | Formato: IEEE 754 64-bit | Alvo: Casos Limite e Singularidades\n", CORDIC_ITERS);
+    printf("************************************************\n\n");
 
-    /* -------------------------------------------------------------------------
-     * 1. Testes em Casos Limite e Pontos Críticos
-     * ------------------------------------------------------------------------- */
-    printf("--- [1] Casos Limite e Entradas Proximas a Zero / Fronteiras ---\n");
+    /* 1. Testes em Casos Limite e Pontos Críticos */
+    printf("*** [1] Casos Limite e Entradas Proximas a Zero / Fronteiras ***\n");
     
     /* 1.1 Entradas extremamente pequenas (Verifica underflow / CORDIC_SHIFT_DOUBLE) */
     double tiny_inputs[] = {1e-3, 1e-6, 1e-9, 1e-12};
@@ -41,7 +39,7 @@ int main(void) {
         test_edge_case("Pequeno", "sin(x)", x, s, sin(x));
         test_edge_case("Pequeno", "cos(x)", x, c, cos(x));
     }
-    printf("---------------------------------------------------------------------------------------------------------\n");
+    printf("************************************************\n");
 
     /* 1.2 Proximidade de pi/2 para Tangente (Quase assíntota vertical) */
     double near_pi2 = (PI / 2.0) - 1e-6;
@@ -61,7 +59,7 @@ int main(void) {
         test_edge_case("Transicao Exp", "sqrt(x)", x, cordic_sqrt(x, CORDIC_ITERS), sqrt(x));
     }
 
-    printf("--- [2] Cobertura das Demais Funcoes CORDIC ---\n");
+    printf("*** [2] Cobertura das Demais Funcoes CORDIC ***\n");
 
     double circular_value = 0.5;
     test_edge_case("Circular", "atan(x)", circular_value,
@@ -118,11 +116,9 @@ int main(void) {
     double pow_exponent = 1.25;
     test_edge_case("Transcendental", "pow(x,y)", pow_base,
                    cordic_pow(pow_base, pow_exponent, CORDIC_ITERS), pow(pow_base, pow_exponent));
-    printf("=========================================================================================================\n\n");
+    printf("************************************************\n\n");
 
-    /* -------------------------------------------------------------------------
-     * 3. Varredura Fina Contínua do 1º Quadrante (Exportação para CSV)
-     * ------------------------------------------------------------------------- */
+    /* 3. Varredura Fina Contínua do 1º Quadrante (Exportação para CSV) */
     char csv_file[64];
     snprintf(csv_file, sizeof(csv_file), "tests/stress_test_domain_%d.csv", CORDIC_ITERS);
     FILE *fp = fopen(csv_file, "w");
@@ -173,13 +169,13 @@ int main(void) {
     fflush(fp);
     fclose(fp);
 
-    printf("--- [3] Resumo da Varredura Continua [0, pi/2] ---\n");
+    printf("*** [3] Resumo da Varredura Continua [0, pi/2] ***\n");
     printf("Total de pontos analisados: %d\n", (int)((PI / 2.0) / step) + 1);
     printf("Pior Erro Absoluto Seno:    %1.2e (em theta = %.4f rad)\n", max_err_sin, worst_angle_sin);
     printf("Pior Erro Absoluto Cosseno: %1.2e (em theta = %.4f rad)\n", max_err_cos, worst_angle_cos);
     printf("Pior Erro Absoluto Tangente (fora do polo): %1.2e\n", max_err_tan);
     printf("\nArquivo com a curva completa salvo em: '%s'\n", csv_file);
-    printf("=========================================================================================================\n");
+    printf("******\n");
 
     return 0;
 }

@@ -213,7 +213,7 @@ int main(void) {
     printf("Benchmark CORDIC: %d repeticoes | %d iteracoes\n\n", NUM_RUNS, CORDIC_ITERS);
     printf("%-22s | %-7s | %-12s | %-10s | %-10s | %s\n",
            "Operacao", "Implementacao", "Tempo Total", "Tempo/Op", "Ciclos/Op", "Slowdown");
-    printf("-----------------------------------------------------------------------------------------------\n");
+    printf("********************************************************************\n");
 
     for (size_t i = 0; i < sizeof(benchmarks) / sizeof(benchmarks[0]); i++) {
         run_case(csv, &benchmarks[i]);

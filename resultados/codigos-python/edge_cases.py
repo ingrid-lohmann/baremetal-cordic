@@ -2,9 +2,6 @@ import io
 import os
 import pandas as pd
 
-# ==============================================================================
-# 1. CONFIGURAÇÃO DO ARQUIVO DE ENTRADA
-# ==============================================================================
 # Altere para a amostra desejada:
 # 'edge_cases_results_24.csv', 'edge_cases_results_26.csv' ou 'edge_cases_results_32.csv'
 csv_path = 'edge_cases_results_32.csv'
@@ -14,16 +11,12 @@ if not os.path.exists(csv_path):
 
 base_name = os.path.splitext(os.path.basename(csv_path))[0]
 
-# Extração dinâmica do número de iterações a partir do nome do arquivo
 try:
   n_iter = int(base_name.split('_')[-1])
 except ValueError:
   n_iter = 24
 
 
-# ==============================================================================
-# 2. LEITURA ROBUSTA DO CSV (TRATAMENTO DE VÍRGULAS INTERNAS NOS NOMES DE TESTES)
-# ==============================================================================
 def carregar_csv_com_tratamento(caminho):
   linhas_ajustadas = []
   with open(caminho, 'r', encoding='utf-8') as f:
@@ -57,9 +50,6 @@ def carregar_csv_com_tratamento(caminho):
 df = carregar_csv_com_tratamento(csv_path)
 
 
-# ==============================================================================
-# 3. FUNÇÕES DE FORMATAÇÃO PADRÃO ABNT / LATEX
-# ==============================================================================
 def formatar_valor(v):
   """Formata valores numéricos e símbolos especiais IEEE 754."""
   if pd.isna(v):
@@ -76,7 +66,6 @@ def formatar_valor(v):
     val = float(v)
     if abs(val) < 1e-15:
       return r'$0{,}0$'
-    # Notação científica para números muito pequenos ou grandes
     if abs(val) >= 1e4 or (0 < abs(val) < 1e-3):
       s_exp = f'{val:.2e}'
       b, e = s_exp.split('e')
@@ -115,9 +104,6 @@ def formatar_nome_teste(nome):
   return rf'\texttt{{{escapado}}}'
 
 
-# ==============================================================================
-# 4. MONTAGEM DA TABELA EM LATEX (.tex)
-# ==============================================================================
 total_cenarios = len(df)
 nome_arquivo_tex = f'tabela_{base_name}.tex'
 
